@@ -3,10 +3,12 @@ import heapq
 class Grafo:
     def __init__(self):
         self.mapa = {
-            "Base Central": {"Zona Norte": 10, "Mata Alta": 12},
-            "Zona Norte": {"Mata Alta": 7},
-            "Mata Alta": {"Zona Norte": 7}
+            "Base Central": {"Zona Norte": 10, "Mata Alta": 12, "Serra Azul": 24},
+            "Zona Norte": {"Mata Alta": 7, "Base Central": 10},
+            "Mata Alta": {"Zona Norte": 7, "Base Central": 12, "Serra Azul": 15},
+            "Serra Azul": {"Base Central": 24, "Mata Alta": 15}
         }
+
 
     def dijkstra(self, origem, destino):
         fila = [(0, origem, [])]

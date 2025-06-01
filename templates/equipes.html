@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerenciar Equipes</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+<div class="sidebar" id="sidebar">
+    <a href="/carregar_chamadas">Carregar Chamadas</a>
+    <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+    <a href="/designar_equipes">Designar Equipe</a>
+        <a href="/equipes">Gerenciar Equipes</a>
+    <a href="/atender">Atender Ocorrência</a>
+</div>
+
+<div class="page-content">
+    <h1>Gerenciar Equipes</h1>
+
+    <form method="POST">
+        <input type="text" name="nome" placeholder="Nome da nova equipe" required>
+        <button type="submit">Adicionar Equipe</button>
+    </form>
+
+    <h2>Equipes Atuais:</h2>
+    <ul>
+        {% for equipe in equipes %}
+            <li>ID {{ equipe.id }} - {{ equipe.nome }}</li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

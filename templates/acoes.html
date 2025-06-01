@@ -1,37 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Histórico de Ações</title>
+    <title>Ações Realizadas</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
 
-<div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
 
-<div class="sidebar" id="sidebar">
-    <a href="/carregar_chamadas">Carregar Chamadas</a>
-    <a href="/visualizar_prioridades">Visualizar Prioridades</a>
-    <a href="/atender">Atender Ocorrência</a>
-    <a href="/acoes">Ver Ações</a>
-    <a href="/status">Ver Status das Áreas</a>
-</div>
+    <div class="sidebar active" id="sidebar">
+        <a href="/carregar_chamadas">Carregar Chamadas</a>
+        <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+        <a href="/designar_equipes">Designar Equipe</a>
+        <a href="/atender">Atender Ocorrência</a>
+        <a href="/acoes">Ver Ações</a>
+        <a href="/status">Ver Status das Áreas</a>
+    </div>
 
-<div class="main-content">
-    <h1>📂 Histórico de Ações</h1>
-        <ul>
-            {% for acao in acoes %}
-                <li>{{ acao }}</li>
-            {% endfor %}
-        </ul>
+    <div class="page-content">
+        <h1>📂 Histórico de Ações por Atendimento</h1>
 
-    <a href="/">Voltar</a>
-</div>
+        {% if historico %}
+            <ul>
+                {% for item in historico %}
+                    <li>
+                        <strong>Atendimento ID: {{ item.id_chamada }} ({{ item.local }})</strong>
+                        <ul>
+                            {% for acao in item.acoes %}
+                                <li>• {{ acao }}</li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Nenhuma ação registrada ainda.</p>
+        {% endif %}
+    </div>
 
-<script>
-function toggleMenu() {
-    document.getElementById("sidebar").classList.toggle("active");
-}
-</script>
+    <script>
+        function toggleMenu() {
+            document.getElementById("sidebar").classList.toggle("active");
+        }
+    </script>
 
 </body>
 </html>

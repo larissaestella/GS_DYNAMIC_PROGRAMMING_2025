@@ -9,9 +9,9 @@
 
 <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
 
-<div class="sidebar" id="sidebar">
-    <a href="/carregar_chamadas">Carregar Chamadas</a>
+<div class="sidebar active" id="sidebar">
     <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+    <a href="/designar_equipes">Designar Equipe</a>
     <a href="/atender">Atender Ocorrência</a>
     <a href="/acoes">Ver Ações</a>
     <a href="/status">Ver Status das Áreas</a>
@@ -26,8 +26,11 @@
         {% endfor %}
     </ul>
 
-    <a href="/">Voltar</a>
+
 </div>
+    <div class="button">
+        <a href="/">Voltar</a>
+    </div>
 
 <script>
 function toggleMenu() {

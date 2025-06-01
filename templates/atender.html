@@ -8,12 +8,13 @@
 
 <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
 
-<div class="sidebar" id="sidebar">
+<div class="sidebar active" id="sidebar">
     <a href="/carregar_chamadas">Carregar Chamadas</a>
     <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+    <a href="/designar_equipes">Designar Equipe</a>
     <a href="/atender">Atender Ocorrência</a>
     <a href="/acoes">Ver Ações</a>
-    <a href="/status">Ver Status das Áreas</a>
+
 </div>
 
 <div class="main-content">
@@ -23,16 +24,22 @@
         <h2>🚨 Ocorrência Atendida</h2>
         <p><strong>ID:</strong> {{ chamada.id }}</p>
         <p><strong>📍 Local:</strong> {{ chamada.local }}</p>
-        <p><strong>🧭 Rota:</strong> {{ rota }}</p>
-        <p><strong>⏱ Tempo Estimado:</strong> {{ tempo }}</p>
+        <p><strong>🧭 Rota:</strong></p>
+            <p>DE: {{ rota[0] }}</p>
+            <p>PARA: {{ rota[-1] }}</p>
+        <p><strong>⏱ Tempo Estimado:</strong> {{ tempo }} minutos</p>
+        <p><strong>Equipe Designada:</strong> {{ equipe }}</p>
+
 
     {% else %}
         <p><strong>Nenhuma ocorrência disponível no momento.</strong></p>
     {% endif %}
 
-    <a href="/">Voltar</a>
 </div>
 
+    <div class="button">
+        <a href="/">Voltar</a>
+    </div>
 <script>
 function toggleMenu() {
     document.getElementById("sidebar").classList.toggle("active");
