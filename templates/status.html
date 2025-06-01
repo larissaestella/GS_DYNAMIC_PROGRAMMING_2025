@@ -1,7 +1,39 @@
-<h2>Status das Áreas Afetadas</h2>
-<ul>
-{% for status in status %}
-    <li>{{ status }}</li>
-{% endfor %}
-</ul>
-<a href="/">Voltar</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Status das Áreas</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E🏠%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+
+<div class="sidebar" id="sidebar">
+    <a href="/carregar_chamadas">Carregar Chamadas</a>
+    <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+    <a href="/atender">Atender Ocorrência</a>
+    <a href="/acoes">Ver Ações</a>
+    <a href="/status">Ver Status das Áreas</a>
+</div>
+
+<div class="main-content">
+    <h1>📊 Status das Áreas Afetadas</h1>
+
+    <ul>
+        {% for item in status %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+
+    <a href="/">Voltar</a>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

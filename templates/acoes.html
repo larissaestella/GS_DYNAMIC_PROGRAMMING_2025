@@ -1,7 +1,37 @@
-<h2>Histórico de Ações</h2>
-<ul>
-{% for acao in acoes %}
-    <li>{{ acao }}</li>
-{% endfor %}
-</ul>
-<a href="/">Voltar</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Histórico de Ações</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+
+<div class="sidebar" id="sidebar">
+    <a href="/carregar_chamadas">Carregar Chamadas</a>
+    <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+    <a href="/atender">Atender Ocorrência</a>
+    <a href="/acoes">Ver Ações</a>
+    <a href="/status">Ver Status das Áreas</a>
+</div>
+
+<div class="main-content">
+    <h1>📂 Histórico de Ações</h1>
+        <ul>
+            {% for acao in acoes %}
+                <li>{{ acao }}</li>
+            {% endfor %}
+        </ul>
+
+    <a href="/">Voltar</a>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

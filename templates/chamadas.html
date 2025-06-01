@@ -2,14 +2,53 @@
 <html>
 <head>
     <title>Chamadas Carregadas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Chamadas Carregadas</h1>
-    <ul>
-        {% for chamada in chamadas %}
-            <li>{{ chamada }}</li>
-        {% endfor %}
-    </ul>
-    <a href="/">Voltar ao menu</a>
+
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+
+    <div class="sidebar" id="sidebar">
+        <a href="/carregar_chamadas">Carregar Chamadas</a>
+        <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+        <a href="/atender">Atender Ocorrência</a>
+        <a href="/acoes">Ver Ações</a>
+        <a href="/status">Ver Status das Áreas</a>
+    </div>
+
+    <div class="page-content">
+        <h1>Chamadas Carregadas</h1>
+        <ul>
+            <li>
+                <strong>📍 Zona Norte</strong><br>
+                • ID: 1<br>
+                • Severidade: 4<br>
+                • Tipo de Vegetação: Cerrado<br>
+                • Clima: Seco
+            </li>
+            <li>
+                <strong>📍 Mata Alta</strong><br>
+                • ID: 2<br>
+                • Severidade: 5<br>
+                • Tipo de Vegetação: Pantanal<br>
+                • Clima: Seco
+            </li>
+            <li>
+                <strong>📍 Serra Azul</strong><br>
+                • ID: 3<br>
+                • Severidade: 3<br>
+                • Tipo de Vegetação: Mata Atlântica<br>
+                • Clima: Úmido
+            </li>
+        </ul>
+
+        <a href="/">Voltar</a>
+    </div>
+
+    <script>
+    function toggleMenu() {
+        document.getElementById("sidebar").classList.toggle("active");
+    }
+    </script>
 </body>
 </html>

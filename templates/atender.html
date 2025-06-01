@@ -1,12 +1,43 @@
-{% if chamada %}
-    <h2>Ocorrência Atendida - ID: {{ chamada.id }}</h2>
-    <p>Rota: {{ rota }} | Tempo Estimado: {{ tempo }}</p>
-    <ul>
-    {% for acao in acoes %}
-        <li>{{ acao }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Nenhuma ocorrência disponível.</p>
-{% endif %}
-<a href="/">Voltar</a>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Atender Ocorrência</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+
+<div class="sidebar" id="sidebar">
+    <a href="/carregar_chamadas">Carregar Chamadas</a>
+    <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+    <a href="/atender">Atender Ocorrência</a>
+    <a href="/acoes">Ver Ações</a>
+    <a href="/status">Ver Status das Áreas</a>
+</div>
+
+<div class="main-content">
+    <h1>Atendimento de Ocorrência por Prioridade</h1>
+    
+    {% if chamada %}
+        <h2>🚨 Ocorrência Atendida</h2>
+        <p><strong>ID:</strong> {{ chamada.id }}</p>
+        <p><strong>📍 Local:</strong> {{ chamada.local }}</p>
+        <p><strong>🧭 Rota:</strong> {{ rota }}</p>
+        <p><strong>⏱ Tempo Estimado:</strong> {{ tempo }}</p>
+
+    {% else %}
+        <p><strong>Nenhuma ocorrência disponível no momento.</strong></p>
+    {% endif %}
+
+    <a href="/">Voltar</a>
+</div>
+
+<script>
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+}
+</script>
+
+</body>
+</html>

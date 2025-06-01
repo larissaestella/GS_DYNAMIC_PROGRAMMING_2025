@@ -1,0 +1,140 @@
+/* Reset e base */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Ícone do menu (|||) */
+.menu-icon {
+    font-size: 30px;
+    cursor: pointer;
+    padding: 15px;
+    background-color: #c62828;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+/* Menu lateral */
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #e53935;
+    overflow-x: hidden;
+    transition: 0.3s;
+    padding-top: 60px;
+    z-index: 1;
+}
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 18px;
+    color: white;
+    display: block;
+    transition: 0.2s;
+}
+
+.sidebar a:hover {
+    background-color: #b71c1c;
+}
+
+/* Quando ativo, abre o menu */
+.sidebar.active {
+    width: 250px;
+}
+
+/* Conteúdo principal */
+.main-content {
+    margin-left: 0;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+h1, h2 {
+    color: #c62828;
+    font-size: 28px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+/* Desafio */
+.desafio {
+    background-color: #fff;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    border-left: 5px solid #d32f2f;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.desafio h2 {
+    color: #d32f2f;
+}
+
+.desafio ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.desafio li {
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+
+/* Estilo comum para listas e itens */
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 800px;
+}
+
+li {
+    background-color: #fff;
+    margin: 10px;
+    padding: 12px 18px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+/* Botão de voltar */
+a {
+    display: block;
+    width: fit-content;
+    margin: 30px auto;
+    text-align: center;
+    padding: 10px 20px;
+    background-color: #d32f2f;
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+a:hover {
+    background-color: #b71c1c;
+}
+
+/* Reuso para todas as páginas */
+.page-content {
+    padding: 20px;
+    margin: auto;
+    max-width: 900px;
+    text-align: left;
+}
+
+/* Atendimento */
+p {
+    text-align: center;
+    font-size: 18px;
+}

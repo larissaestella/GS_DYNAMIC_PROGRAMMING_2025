@@ -1,14 +1,51 @@
 <!doctype html>
 <html>
-<head><title>Sistema de Queimadas</title></head>
+<head>
+    <title>Sistema de Queimadas</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E🔥%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
 <body>
-    <h1>Sistema de Combate a Queimadas</h1>
-    <ul>
-        <li><a href="/carregar_chamadas">Carregar Chamadas</a></li>
-        <li><a href="/visualizar_prioridades">Visualizar Prioridades</a></li>
-        <li><a href="/atender">Atender Ocorrência</a></li>
-        <li><a href="/acoes">Ver Ações</a></li>
-        <li><a href="/status">Ver Status das Áreas</a></li>
-    </ul>
+    <!-- Ícone do menu hamburguer -->
+    <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
+
+    <!-- Menu lateral -->
+    <div id="sidebar" class="sidebar">
+        <a href="/carregar_chamadas">Carregar Chamadas</a>
+        <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+        <a href="/atender">Atender Ocorrência</a>
+        <a href="/acoes">Ver Ações</a>
+        <a href="/status">Ver Status das Áreas</a>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+        <h1>Sistema de Combate a Queimadas</h1>
+
+        <div class="desafio">
+            <h2>🔥 DESAFIO</h2>
+            <p>
+                Você foi contratado para desenvolver um sistema inteligente de combate a queimadas florestais,
+                que organiza a fila de chamados, prioriza atendimentos, registra ações, e traça rotas otimizadas
+                de chegada até os focos de incêndio, utilizando grafos.
+            </p>
+            <p>
+                O sistema simula uma central de emergências que precisa tomar decisões rapidamente sobre:
+            </p>
+            <ul>
+                <li>✅ Qual equipe atenderá qual foco</li>
+                <li>🛠️ Quais ações devem ser tomadas</li>
+                <li>📍 Como chegar ao local no menor tempo possível</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Script para abrir/fechar o menu -->
+    <script>
+        function toggleMenu() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+    </script>
 </body>
 </html>
