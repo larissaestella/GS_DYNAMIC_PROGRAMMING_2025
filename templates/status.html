@@ -1,7 +1,7 @@
 <h2>Status das Áreas Afetadas</h2>
 <ul>
-{% for area, status in status_list %}
-    <li>{{ area }}: {{ status }}</li>
+{% for status in status %}
+    <li>{{ status }}</li>
 {% endfor %}
 </ul>
 <a href="/">Voltar</a>

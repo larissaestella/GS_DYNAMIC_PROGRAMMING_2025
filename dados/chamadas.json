@@ -1,0 +1,4 @@
+[
+    { "id": 1, "local": "Zona Norte", "severidade": 4, "tipo_vegetacao": "cerrado", "clima": "seco" },
+    { "id": 2, "local": "Mata Alta", "severidade": 5, "tipo_vegetacao": "pantanal", "clima": "seco" }
+]
