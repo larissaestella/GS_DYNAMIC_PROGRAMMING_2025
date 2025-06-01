@@ -1,0 +1,5 @@
+<h2>Fila de Prioridades</h2>
+{% for prioridade, chamada in prioridades %}
+<p>ID: {{ chamada.id }} | Local: {{ chamada.local }} | Prioridade: {{ prioridade }}</p>
+{% endfor %}
+<a href="/">Voltar</a>
