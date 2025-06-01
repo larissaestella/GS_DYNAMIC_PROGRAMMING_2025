@@ -147,6 +147,8 @@ from estruturas.grafo import Grafo
 
 app = Flask(__name__)
 
+ultima_area_atendida = None
+
 # Estruturas Globais
 fila_chamadas = Fila()
 fila_prioridade = FilaPrioridade()
@@ -193,20 +195,34 @@ def visualizar_prioridades():
 
 @app.route('/atender')
 def atender():
+    global ultima_area_atendida
+
     if fila_prioridade.vazia():
+        # Atualiza o status da última área para "área controlada" caso haja uma área pendente
+        if ultima_area_atendida is not None:
+            lista_status.atualizar_status(ultima_area_atendida, "área controlada")
+            ultima_area_atendida = None
         return render_template('atender.html', resultado="Todas as ocorrências foram atendidas.")
+    
+    # Se existir uma última área, significa que foi atendida antes, então atualiza seu status para "área controlada"
+    if ultima_area_atendida is not None:
+        lista_status.atualizar_status(ultima_area_atendida, "área controlada")
     
     prioridade, chamada = fila_prioridade.remover()
     origem = "Base Central"
     destino = chamada['local']
     caminho, tempo = grafo.dijkstra(origem, destino)
 
+    # Atualiza status para "controle em andamento" da nova chamada
+    lista_status.atualizar_status(destino, "controle em andamento")
+
+    # Atualiza a última área atendida para a atual
+    ultima_area_atendida = destino
+
     # Simular ações
     acoes = ["Criar aceiro", "Aplicar barreira de contenção"]
     for acao in acoes:
         pilha_acoes.empilhar(acao)
-
-    lista_status.atualizar_status(destino, ": controle em andamento")
 
     resultado = {
         "chamada": chamada,
@@ -214,12 +230,13 @@ def atender():
         "tempo": tempo
     }
     return render_template(
-    'atender.html',
-    chamada=resultado['chamada'],
-    rota=resultado['rota'],
-    tempo=resultado['tempo'],
-    acoes=["Criar aceiro", "Aplicar barreira de contenção"]
-)
+        'atender.html',
+        chamada=resultado['chamada'],
+        rota=resultado['rota'],
+        tempo=resultado['tempo'],
+        acoes=acoes
+    )
+
 
 
 @app.route('/acoes')
