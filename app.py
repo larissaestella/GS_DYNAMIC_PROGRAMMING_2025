@@ -40,6 +40,10 @@ equipes = [
     {"id": 3, "nome": "Equipe Charlie"},
 ]
 
+@app.route('/')
+def index():
+    return redirect(url_for('home'))
+
 @app.route('/home')
 def home():
     chamadas_ativas = len(fila_prioridade.itens()) # Chamadas ativas = quantas estão na fila de prioridade
@@ -120,11 +124,16 @@ def atender():
     # Seleciona aleatoriamente 5 ações para o atendimento
     acoes = random.sample(acoes_disponiveis, 5)
 
+    equipe = chamada.get('equipe_designada')
+    if not equipe:
+        equipe = 'Equipe não designada'
+
     # Armazena no histórico as ações realizadas
     historico_acoes.append({
         "id_chamada": chamada['id'],
         "local": chamada['local'],
-        "acoes": list(acoes)
+        "acoes": list(acoes),
+        "equipe": equipe
     })
 
     # Armazena na árvore de histórico
@@ -141,10 +150,6 @@ def atender():
         "rota": caminho,
         "tempo": tempo
     }
-
-    equipe = chamada.get('equipe_designada')
-    if not equipe:
-        equipe = 'Equipe não designada'
 
 
     return render_template(
