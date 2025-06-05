@@ -10,6 +10,7 @@ from estruturas.heap_prioridade import FilaPrioridade
 from estruturas.pilha import Pilha
 from estruturas.lista_ligada import ListaLigada
 from estruturas.grafo import Grafo
+from estruturas.arvore_historico import ArvoreHistorico
 
 app = Flask(__name__)
 
@@ -22,6 +23,8 @@ pilha_acoes = Pilha()
 lista_status = ListaLigada()
 grafo = Grafo()
 chamadas_carregadas = []
+arvore_historico = ArvoreHistorico()
+
 
 # Peso da vegetação para prioridade
 pesos_vegetacao = {
@@ -124,6 +127,10 @@ def atender():
         "acoes": list(acoes)
     })
 
+    # Armazena na árvore de histórico
+    arvore_historico.adicionar_atendimento(chamada['local'], list(acoes))
+
+
     # Empilha as ações realizadas
     for acao in acoes:
         pilha_acoes.empilhar(acao)
@@ -148,6 +155,12 @@ def atender():
         acoes=acoes, 
         equipe=equipe
     )
+
+@app.route('/arvore_historico')
+def exibir_arvore():
+    historico = arvore_historico.listar()
+    return render_template('arvore.html', historico=historico)
+
 
 @app.route('/equipes', methods=['GET', 'POST'])
 def gerenciar_equipes():

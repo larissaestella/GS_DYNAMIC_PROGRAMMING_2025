@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ações Realizadas</title>
+    <title>Histórico de Ações em Árvore</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E⚠️%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
@@ -21,15 +21,15 @@
     </div>
 
     <div class="page-content">
-        <h1>📂 Histórico de Ações por Atendimento</h1>
+        <h1>🌳 Histórico de Ações por Local (Formato em Árvore)</h1>
 
         {% if historico %}
             <ul>
-                {% for item in historico %}
+                {% for no in historico %}
                     <li>
-                        <strong>Atendimento ID: {{ item.id_chamada }} ({{ item.local }})</strong>
+                        <strong>{{ no.local }}</strong>
                         <ul>
-                            {% for acao in item.acoes %}
+                            {% for acao in no.acoes %}
                                 <li>• {{ acao }}</li>
                             {% endfor %}
                         </ul>
@@ -37,7 +37,7 @@
                 {% endfor %}
             </ul>
         {% else %}
-            <p>Nenhuma ação registrada ainda.</p>
+            <p>Nenhum histórico registrado até o momento.</p>
         {% endif %}
     </div>
 

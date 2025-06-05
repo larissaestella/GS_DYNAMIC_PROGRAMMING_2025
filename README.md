@@ -25,8 +25,9 @@ O objetivo principal é demonstrar a aplicação prática de estruturas de dados
 - 📥 **Carregamento de Chamadas** via JSON
 - 🚨 **Fila de Prioridade** com heap (baseada em severidade e tipo de vegetação)
 - 🧭 **Cálculo de Rotas Otimizadas** utilizando grafos e algoritmo de Dijkstra
-- 🔁 **Controle de Ações** com pilha e histórico
+- 🗃️ **Controle de Ações** com pilha e histórico
 - 🔁 **Monitoramento do Status** com listas ligadas
+- 🌲 **Visualização em Árvore** do histórico por local e equipe designada
 - 📊 **Painel de Status Dinâmico** com gráficos Chart.js
 - 🌐 **Interface Web com Flask**
 
@@ -43,6 +44,7 @@ GS_DYNAMIC_PROGRAMMING_2025/
 │   └── chamadas.json      # Dados simulados de chamadas de emergência
 ├── estruturas/
 │   ├── __init__.py
+│   ├── arvore_historico.py # Implementação de arvore no historico das ações feitas
 │   ├── fila.py            # Implementação de fila comum
 │   ├── heap_prioridade.py # Implementação de fila de prioridade (heap)
 │   ├── pilha.py           # Implementação de pilha para ações
@@ -52,6 +54,7 @@ GS_DYNAMIC_PROGRAMMING_2025/
     ├── style.css
 ├── templates/
     ├── acoes.html
+    ├── arvore.html
     ├── atender.html
     ├── chamadas.html
     ├── designar_equipes.html
@@ -106,8 +109,9 @@ Certifique-se de instalar as dependências listadas no arquivo requirements.txt 
 3. A opção "Atender Ocorrência" em `/atender` executa o atendimento à chamada de maior prioridade, exibindo ID, local, rota e equipe designada
 4. A rota é exibida com início, destino, caminho percorrido e tempo
 5. Ações são registradas via pilha que será exibido em `/acoes`
-6. Status são atualizados dinamicamente em `/status`
-7. Dashboard atualiza em tempo real na `/home`
+6. O histórico de todos os atendimentos, com ações realizadas e equipes envolvidas, é exibido de forma hierárquica na rota `/arvore_historico`
+7. Status são atualizados dinamicamente em `/status`
+8. Dashboard atualiza em tempo real na `/home`
 
 ---
 
@@ -146,7 +150,7 @@ A aplicação web exibe:
 | `Pilha` | Armazena ações executadas por ocorrência |
 | `Grafo` | Representa o mapa com pesos e calcula a rota mais curta com Dijkstra |
 | `Fila Simples` | Armazena chamadas para atendimento sequencial |
-
+| `Árvore` | Exibe o histórico de atendimentos em estrutura hierárquica por local e equipe designada|
 ---
 
 
@@ -154,4 +158,3 @@ A aplicação web exibe:
 
 **Global Solution FIAP - 2025
 Engenharia de Software**
-
