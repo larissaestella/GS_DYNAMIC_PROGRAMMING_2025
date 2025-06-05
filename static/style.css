@@ -29,12 +29,14 @@ body {
     left: 0;
     background-color: #e53935;
     overflow-x: hidden;
-    transition: 0.3s;
+    transition: 0.3s ease;
     padding-top: 60px;
+    transform: translateX(0);
     z-index: 1;
 }
 
 .sidebar a {
+    display: flex;
     padding: 15px 25px;
     text-decoration: none;
     font-size: 18px;
@@ -177,6 +179,7 @@ ul li {
 .main-content {
             padding: 20px;
             background-color: rgb(235, 227, 227);
+            transition: margin-left 0.3s
         }
 
 .dashboard-cards {
@@ -210,3 +213,69 @@ canvas {
     margin: auto;
     display: block;
     }
+
+
+@media (max-width: 1023) and (min-width: 768px){
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar a{
+        padding-left: 15%;
+        font-size: 14px;
+    }
+
+    .sidebar.active {
+        width: 100px;
+        transform: translateX(0);
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .dashboard-cards {
+        flex-direction: column-reverse;
+    }
+}
+
+@media (max-width: 767px){
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar a{
+        padding-left: 15%;
+        font-size: 14px;
+    }
+
+    .sidebar.active {
+        width: 100px;
+        transform: translateX(0);
+    }
+
+    .menu-icon {
+        display: block;
+    }
+
+    .dashboard-cards {
+        flex-direction: column;
+    }
+
+    .page-content {
+    padding: 15px;
+    margin: auto;
+    max-width: 400px;
+    text-align: left;
+}
+}
