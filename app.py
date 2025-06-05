@@ -3,6 +3,8 @@ import json
 import os
 import random
 
+# Importação das estruturas de dados customizadas
+
 from estruturas.fila import Fila
 from estruturas.heap_prioridade import FilaPrioridade
 from estruturas.pilha import Pilha
@@ -28,7 +30,7 @@ pesos_vegetacao = {
     "pantanal": 2.0
 }
 
-# Equipes Atuais
+# Equipes Disponíveis
 equipes = [
     {"id": 1, "nome": "Equipe Alpha"},
     {"id": 2, "nome": "Equipe Bravo"},
@@ -37,11 +39,9 @@ equipes = [
 
 @app.route('/home')
 def home():
-    # Chamadas ativas = quantas estão na fila de prioridade
-    chamadas_ativas = len(fila_prioridade.itens())
+    chamadas_ativas = len(fila_prioridade.itens()) # Chamadas ativas = quantas estão na fila de prioridade
 
-    # Status vindo da lista ligada
-    status_areas = lista_status.exibir()  
+    status_areas = lista_status.exibir() # Status vindo da lista ligada
 
     em_atendimento = sum(1 for s in status_areas if "controle em andamento" in s)
     atendimentos_concluidos = sum(1 for s in status_areas if "área controlada" in s)
@@ -58,42 +58,46 @@ def home():
 
 @app.route('/carregar_chamadas')
 def carregar_chamadas():
-    global chamadas_carregadas
+    global chamadas_carregadas # Carrega os dados do arquivo JSON e insere nas filas
     with open('dados/chamadas.json') as f:
         chamadas = json.load(f)
         chamadas_carregadas = chamadas
         for chamada in chamadas:
-            fila_chamadas.enfileirar(chamada)  # Garante que fila_chamadas tem método enfileirar()
-            fila_prioridade.inserir(chamada)   # A prioridade será calculada internamente
+            fila_chamadas.enfileirar(chamada)  
+            fila_prioridade.inserir(chamada)   # Ordem por prioridade
     return render_template('chamadas.html', chamadas=chamadas_carregadas)
 
 @app.route('/visualizar_prioridades')
-def visualizar_prioridades():
+def visualizar_prioridades(): # Exibe as chamadas organizadas pela fila de prioridade
     prioridades_ordenadas = sorted(fila_prioridade.fila)
     print("Prioridades:", prioridades_ordenadas)  # DEBUG
     return render_template('prioridades.html', prioridades=prioridades_ordenadas)
 
 @app.route('/atender')
 def atender():
-    global ultima_area_atendida, historico_acoes
+    global ultima_area_atendida, historico_acoes # Simula o atendimento de uma ocorrência
 
+    # Se a fila estiver vazia, finaliza o atendimento anterior
     if fila_prioridade.vazia():
         if ultima_area_atendida is not None:
             lista_status.atualizar_status(ultima_area_atendida, "área controlada")
             ultima_area_atendida = None
         return render_template('atender.html', resultado="Todas as ocorrências foram atendidas.")
     
+    # Marca como concluída a ocorrência anterior, se houver
     if ultima_area_atendida is not None:
         lista_status.atualizar_status(ultima_area_atendida, "área controlada")
     
+    # Remove a próxima chamada com maior prioridade
     prioridade, chamada = fila_prioridade.remover()
     origem = "Base Central"
     destino = chamada['local']
-    caminho, tempo = grafo.dijkstra(origem, destino)
+    caminho, tempo = grafo.dijkstra(origem, destino) # Gera rota otimizada com Dijkstra
 
     lista_status.atualizar_status(destino, "controle em andamento")
     ultima_area_atendida = destino
 
+    # Ações possíveis para a ocorrência
     acoes_disponiveis = [
             "Criar aceiro",
             "Aplicar barreira de contenção",
@@ -113,16 +117,18 @@ def atender():
     # Seleciona aleatoriamente 5 ações para o atendimento
     acoes = random.sample(acoes_disponiveis, 5)
 
-    # Registrar no histórico as ações feitas para essa chamada
+    # Armazena no histórico as ações realizadas
     historico_acoes.append({
         "id_chamada": chamada['id'],
         "local": chamada['local'],
         "acoes": list(acoes)
     })
 
+    # Empilha as ações realizadas
     for acao in acoes:
         pilha_acoes.empilhar(acao)
 
+    # Informações da ocorrência e da equipe envolvida
     resultado = {
         "chamada": chamada,
         "rota": caminho,
@@ -145,7 +151,7 @@ def atender():
 
 @app.route('/equipes', methods=['GET', 'POST'])
 def gerenciar_equipes():
-    if request.method == 'POST':
+    if request.method == 'POST': # Adiciona uma nova equipe ao sistema
         nome_novo = request.form['nome']
         if nome_novo:
             novo_id = max([e['id'] for e in equipes]) + 1 if equipes else 1
@@ -156,7 +162,7 @@ def gerenciar_equipes():
 
 @app.route('/designar_equipes', methods=['GET', 'POST'])
 def designar_equipe():
-    if request.method == 'POST':
+    if request.method == 'POST': # Atribui uma equipe a uma chamada específica
         id_ocorrencia = int(request.form['id_ocorrencia'])
         id_equipe = int(request.form['id_equipe'])
 
@@ -173,12 +179,12 @@ def designar_equipe():
 
 @app.route('/acoes')
 def acoes():
-    return render_template('acoes.html', historico=historico_acoes)
+    return render_template('acoes.html', historico=historico_acoes) # Exibe o histórico de ações realizadas
 
 @app.route('/status')
 def status():
     status_areas = lista_status.exibir()
-    return render_template('status.html', status=status_areas)
+    return render_template('status.html', status=status_areas)  # Exibe o status atual das áreas monitoradas
 
 if __name__ == '__main__':
     app.run(debug=True)
