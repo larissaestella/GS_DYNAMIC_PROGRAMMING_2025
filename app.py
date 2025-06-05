@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
 import json
 import os
+import random
 
 from estruturas.fila import Fila
 from estruturas.heap_prioridade import FilaPrioridade
@@ -18,6 +19,7 @@ fila_prioridade = FilaPrioridade()
 pilha_acoes = Pilha()
 lista_status = ListaLigada()
 grafo = Grafo()
+chamadas_carregadas = []
 
 # Peso da vegetação para prioridade
 pesos_vegetacao = {
@@ -26,38 +28,12 @@ pesos_vegetacao = {
     "pantanal": 2.0
 }
 
-# Designar uma ocorrência para uma equipe
-
+# Equipes Atuais
 equipes = [
     {"id": 1, "nome": "Equipe Alpha"},
     {"id": 2, "nome": "Equipe Bravo"},
     {"id": 3, "nome": "Equipe Charlie"},
 ]
-
-
-
-# Variáveis auxiliares
-chamadas_carregadas = []
-
-# @app.route('/home')
-# def index():
-#     return render_template('index.html')
-
-# @app.route('/home')
-# def home():
-#     chamadas_ativas = len(chamadas_carregadas)
-#     em_atendimento = len([c for c in chamadas_carregadas if c.get("status") == "em_atendimento"])
-#     dados = lista_status.to_list()
-#     atendimentos_concluidos = len([d for d in dados if d.get("status") == "concluido"])
-
-#     total_equipes = len(equipes)
-
-#     return render_template('index.html',
-#                         chamadas_ativas=chamadas_ativas,
-#                         em_atendimento=em_atendimento,
-#                         atendimentos_concluidos=atendimentos_concluidos,
-#                         total_equipes=total_equipes)
-
 
 @app.route('/home')
 def home():
@@ -65,7 +41,7 @@ def home():
     chamadas_ativas = len(fila_prioridade.itens())
 
     # Status vindo da lista ligada
-    status_areas = lista_status.exibir()  # Ex: ["Local X: controle em andamento", "Local Y: área controlada"]
+    status_areas = lista_status.exibir()  
 
     em_atendimento = sum(1 for s in status_areas if "controle em andamento" in s)
     atendimentos_concluidos = sum(1 for s in status_areas if "área controlada" in s)
@@ -79,7 +55,6 @@ def home():
         atendimentos_concluidos=atendimentos_concluidos,
         total_equipes=total_equipes
     )
-
 
 @app.route('/carregar_chamadas')
 def carregar_chamadas():
@@ -97,9 +72,6 @@ def visualizar_prioridades():
     prioridades_ordenadas = sorted(fila_prioridade.fila)
     print("Prioridades:", prioridades_ordenadas)  # DEBUG
     return render_template('prioridades.html', prioridades=prioridades_ordenadas)
-
-
-import random
 
 @app.route('/atender')
 def atender():
@@ -122,13 +94,30 @@ def atender():
     lista_status.atualizar_status(destino, "controle em andamento")
     ultima_area_atendida = destino
 
-    acoes = ["Criar aceiro", "Aplicar barreira de contenção", "Monitorar focos", "Usar equipamento de resfriamento"]
+    acoes_disponiveis = [
+            "Criar aceiro",
+            "Aplicar barreira de contenção",
+            "Pulverizar água nas bordas",
+            "Monitorar temperatura do local",
+            "Isolar área afetada",
+            "Realizar controle de fumaça",
+            "Reforçar equipe no local",
+            "Avaliar risco de propagação",
+            "Usar equipamento de combate manual",
+            "Realizar patrulha aérea",
+            "Instalar sensores de calor",
+            "Acionar reforço de bombeiros",
+            "Planejar evacuação",
+        ]
+
+    # Seleciona aleatoriamente 5 ações para o atendimento
+    acoes = random.sample(acoes_disponiveis, 5)
 
     # Registrar no histórico as ações feitas para essa chamada
     historico_acoes.append({
         "id_chamada": chamada['id'],
         "local": chamada['local'],
-        "acoes": list(acoes)  # copia da lista
+        "acoes": list(acoes)
     })
 
     for acao in acoes:
@@ -182,12 +171,9 @@ def designar_equipe():
 
     return render_template('designar_equipes.html', chamadas=fila_chamadas, equipes=equipes)
 
-
 @app.route('/acoes')
 def acoes():
     return render_template('acoes.html', historico=historico_acoes)
-
-
 
 @app.route('/status')
 def status():

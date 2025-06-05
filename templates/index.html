@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Sistema de Queimadas</title>
-    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E🔥%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E⚠️%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         
@@ -12,10 +12,8 @@
     </style>
 </head>
 <body>
-    <!-- Ícone do menu hamburguer -->
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
 
-    <!-- Menu lateral -->
     <div id="sidebar" class="sidebar active">
         <a href="/carregar_chamadas">Carregar Chamadas</a>
         <a href="/visualizar_prioridades">Visualizar Prioridades</a>
@@ -23,7 +21,6 @@
         <a href="/atender">Atender Ocorrência</a>
     </div>
 
-    <!-- Conteúdo principal -->
     <div class="main-content">
         <h1>Sistema de Combate a Queimadas</h1>
         <p>Monitoramento, Resposta e Ações em Tempo Real</p>
@@ -39,7 +36,6 @@
         <canvas id="statusChart"></canvas>
     </div>
 
-    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         const ctx = document.getElementById('statusChart').getContext('2d');

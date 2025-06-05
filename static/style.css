@@ -7,7 +7,7 @@ body {
     color: #333;
 }
 
-/* Ícone do menu (|||) */
+/* Ícone do menu */
 .menu-icon {
     font-size: 30px;
     cursor: pointer;
@@ -65,31 +65,6 @@ h1, h2 {
     font-size: 28px;
     margin-top: 20px;
     text-align: center;
-}
-
-/* Desafio */
-.desafio {
-    background-color: #fff;
-    padding: 20px;
-    margin: 20px auto;
-    max-width: 800px;
-    border-left: 5px solid #d32f2f;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-    text-align: left;
-}
-
-.desafio h2 {
-    color: #d32f2f;
-}
-
-.desafio ul {
-    list-style-type: none;
-    padding-left: 0;
-}
-
-.desafio li {
-    margin-bottom: 8px;
-    font-size: 16px;
 }
 
 /* Estilo comum para listas e itens */
