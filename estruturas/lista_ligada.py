@@ -26,3 +26,14 @@ class ListaLigada:
             resultado.append(f"{atual.local}: {atual.status}")
             atual = atual.proximo
         return resultado
+    
+    def to_list(self):
+        atual = self.inicio
+        elementos = []
+        while atual:
+            elementos.append({
+                "local": atual.local,
+                "status": atual.status
+            })
+            atual = atual.proximo
+        return elementos

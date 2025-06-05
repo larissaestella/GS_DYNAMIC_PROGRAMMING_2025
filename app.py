@@ -39,9 +39,47 @@ equipes = [
 # Variáveis auxiliares
 chamadas_carregadas = []
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+# @app.route('/home')
+# def index():
+#     return render_template('index.html')
+
+# @app.route('/home')
+# def home():
+#     chamadas_ativas = len(chamadas_carregadas)
+#     em_atendimento = len([c for c in chamadas_carregadas if c.get("status") == "em_atendimento"])
+#     dados = lista_status.to_list()
+#     atendimentos_concluidos = len([d for d in dados if d.get("status") == "concluido"])
+
+#     total_equipes = len(equipes)
+
+#     return render_template('index.html',
+#                         chamadas_ativas=chamadas_ativas,
+#                         em_atendimento=em_atendimento,
+#                         atendimentos_concluidos=atendimentos_concluidos,
+#                         total_equipes=total_equipes)
+
+
+@app.route('/home')
+def home():
+    # Chamadas ativas = quantas estão na fila de prioridade
+    chamadas_ativas = len(fila_prioridade.itens())
+
+    # Status vindo da lista ligada
+    status_areas = lista_status.exibir()  # Ex: ["Local X: controle em andamento", "Local Y: área controlada"]
+
+    em_atendimento = sum(1 for s in status_areas if "controle em andamento" in s)
+    atendimentos_concluidos = sum(1 for s in status_areas if "área controlada" in s)
+
+    total_equipes = len(equipes)
+
+    return render_template(
+        'index.html',
+        chamadas_ativas=chamadas_ativas,
+        em_atendimento=em_atendimento,
+        atendimentos_concluidos=atendimentos_concluidos,
+        total_equipes=total_equipes
+    )
+
 
 @app.route('/carregar_chamadas')
 def carregar_chamadas():
@@ -102,7 +140,10 @@ def atender():
         "tempo": tempo
     }
 
-    equipe = chamada.get('equipe_designada', 'Equipe não designada')
+    equipe = chamada.get('equipe_designada')
+    if not equipe:
+        equipe = 'Equipe não designada'
+
 
     return render_template(
         'atender.html',

@@ -1,44 +1,85 @@
 <!doctype html>
 <html>
 <head>
+    <meta charset="utf-8">
     <title>Sistema de Queimadas</title>
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32'%3E%3Ctext x='0' y='30' font-size='30'%3E🔥%3C/text%3E%3C/svg%3E" type="image/svg+xml">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        
+
+        
+    </style>
 </head>
 <body>
     <!-- Ícone do menu hamburguer -->
     <div class="menu-icon" onclick="toggleMenu()">&#9776;</div>
 
     <!-- Menu lateral -->
-    <div id="sidebar" class="sidebar">
+    <div id="sidebar" class="sidebar active">
         <a href="/carregar_chamadas">Carregar Chamadas</a>
         <a href="/visualizar_prioridades">Visualizar Prioridades</a>
+        <a href="/designar_equipes">Designar Equipe</a>
+        <a href="/atender">Atender Ocorrência</a>
     </div>
 
     <!-- Conteúdo principal -->
     <div class="main-content">
         <h1>Sistema de Combate a Queimadas</h1>
+        <p>Monitoramento, Resposta e Ações em Tempo Real</p>
 
-        <div class="desafio">
-            <h2>🔥 DESAFIO</h2>
-            <p>
-                Sistema inteligente de combate a queimadas florestais,
-                que organiza a fila de chamados, prioriza atendimentos, registra ações, e traça rotas otimizadas
-                de chegada até os focos de incêndio, utilizando grafos.
-            </p>
-            <p>
-                O sistema simula uma central de emergências que precisa tomar decisões rapidamente sobre:
-            </p>
-            <ul>
-                <li>✅ Qual equipe atenderá qual foco</li>
-                <li>🛠️ Quais ações devem ser tomadas</li>
-                <li>📍 Como chegar ao local no menor tempo possível</li>
-            </ul>
+        <div class="dashboard-cards">
+            <div class="card active">🔥 Chamadas Ativas: {{ chamadas_ativas }}</div>
+            <div class="card in-progress">⏳ Em Atendimento: {{ em_atendimento }}</div>
+            <div class="card completed">✅ Concluídas: {{ atendimentos_concluidos }}</div>
+            <div class="card teams">👨‍🚒 Equipes Ativas: {{ total_equipes }}</div>
         </div>
+
+        <h2 style="text-align:center;">Resumo Visual das Ocorrências</h2>
+        <canvas id="statusChart"></canvas>
     </div>
 
-    <!-- Script para abrir/fechar o menu -->
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+        const ctx = document.getElementById('statusChart').getContext('2d');
+        const statusChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: ['Chamadas Ativas', 'Em Atendimento', 'Concluídas'],
+                datasets: [{
+                    label: 'Status das Ocorrências',
+                    data: [{{ chamadas_ativas }}, {{ em_atendimento }}, {{ atendimentos_concluidos }}],
+                    backgroundColor: ['#fd3737', '#feca57', '#1dd1a1'],
+                    borderColor: '#ffffff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: '#333',
+                            font: {
+                                size: 14
+                            }
+                        }
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.parsed;
+                                return `${label}: ${value}`;
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
         function toggleMenu() {
             const sidebar = document.getElementById('sidebar');
             sidebar.classList.toggle('active');

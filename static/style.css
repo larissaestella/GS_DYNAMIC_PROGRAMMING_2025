@@ -12,7 +12,7 @@ body {
     font-size: 30px;
     cursor: pointer;
     padding: 5px 10px;
-    background-color: #c62828;
+    background-color: #e53935;
     color: white;
     position: fixed;
     top: 0;
@@ -196,3 +196,42 @@ ul li {
     color: #333;
     border-left: 4px solid #e53935;
 }
+
+/* Dashboard cards home*/
+
+.main-content {
+            padding: 20px;
+            background-color: rgb(235, 227, 227);
+        }
+
+.dashboard-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    margin-bottom: 40px;
+    display: flex;
+    justify-content: space-around;
+    margin: 20px auto;
+    max-width: 500px;
+}
+
+.card {
+    flex: 1 1 200px;;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.card.active { background-color: #fd3737; color: white; }
+.card.in-progress { background-color: #feca57; color: white; }
+.card.completed { background-color: #1dd1a1; color: white; }
+.card.teams { background-color: #54a0ff; color: white; }
+
+canvas {
+    max-width: 500px;
+    margin: auto;
+    display: block;
+    }

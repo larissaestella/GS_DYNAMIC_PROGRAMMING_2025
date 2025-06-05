@@ -2,11 +2,17 @@ import heapq
 
 class Grafo:
     def __init__(self):
+        # self.mapa = {
+        #     "Base Central": {"Zona Norte": 10, "Mata Alta": 12, "Serra Azul": 24},
+        #     "Zona Norte": {"Mata Alta": 7, "Base Central": 10},
+        #     "Mata Alta": {"Zona Norte": 7, "Base Central": 12, "Serra Azul": 15},
+        #     "Serra Azul": {"Base Central": 24, "Mata Alta": 15}
+        # }
         self.mapa = {
-            "Base Central": {"Zona Norte": 10, "Mata Alta": 12, "Serra Azul": 24},
-            "Zona Norte": {"Mata Alta": 7, "Base Central": 10},
-            "Mata Alta": {"Zona Norte": 7, "Base Central": 12, "Serra Azul": 15},
-            "Serra Azul": {"Base Central": 24, "Mata Alta": 15}
+            "Base Central": {"Zona Norte": 10, "Vila Verde": 5,},
+            "Zona Norte": {"Base Central": 10, "Mata Alta": 7},
+            "Vila Verde": {"Base Central": 5, "Mata Alta": 3},
+            "Mata Alta": {"Zona Norte": 7, "Vila Verde": 3}
         }
 
 
