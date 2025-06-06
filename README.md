@@ -27,7 +27,7 @@ O objetivo principal é demonstrar a aplicação prática de estruturas de dados
 - 🧭 **Cálculo de Rotas Otimizadas** utilizando grafos e algoritmo de Dijkstra
 - 🗃️ **Controle de Ações** com pilha e histórico
 - 🔁 **Monitoramento do Status** com listas ligadas
-- 🌲 **Visualização em Árvore** do histórico por local e equipe designada
+- 🌲 **Visualização em Árvore** do histórico por local 
 - 📊 **Painel de Status Dinâmico** com gráficos Chart.js
 - 🌐 **Interface Web com Flask**
 
@@ -108,8 +108,8 @@ Certifique-se de instalar as dependências listadas no arquivo requirements.txt 
 3. Após verificar qual a sequência de prioridade o usuário escolhe as equipes em `/designar_equipes`, caso queira adicionar novas pode seguir em `/equipes`
 3. A opção "Atender Ocorrência" em `/atender` executa o atendimento à chamada de maior prioridade, exibindo ID, local, rota e equipe designada
 4. A rota é exibida com início, destino, caminho percorrido e tempo
-5. Ações são registradas via pilha que será exibido em `/acoes`
-6. O histórico de todos os atendimentos, com ações realizadas e equipes envolvidas, é exibido de forma hierárquica na rota `/arvore_historico`
+5. Ações por atendimento são registradas via pilha que será exibido em `/acoes`
+6. O histórico de todos os atendimentos com as ações realizadas por local, é exibido em ordem alfabética, utilizando uma árvore binária de busca (ABB) `/arvore_historico`
 7. Status são atualizados dinamicamente em `/status`
 8. Dashboard atualiza em tempo real na `/home`
 
@@ -150,7 +150,7 @@ A aplicação web exibe:
 | `Pilha` | Armazena ações executadas por ocorrência |
 | `Grafo` | Representa o mapa com pesos e calcula a rota mais curta com Dijkstra |
 | `Fila Simples` | Armazena chamadas para atendimento sequencial |
-| `Árvore` | Exibe o histórico de atendimentos em estrutura hierárquica por local e equipe designada|
+| `Árvore` | Exibe o histórico de atendimentos em ordem alfabética por local |
 ---
 
 
